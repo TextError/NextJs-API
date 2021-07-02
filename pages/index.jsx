@@ -8,7 +8,14 @@ const Home = () => {
     e.preventDefault();
     const email = isEmail.current.value;
     const text = isText.current.value;
-    
+    fetch('/api/feedback', {
+      method: 'POST',
+      body: JSON.stringify({ email, text }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then(res => res.json())
+      .then(data => console.log(data))
+      .catch(e => console.log(e))
   };
 
   return (

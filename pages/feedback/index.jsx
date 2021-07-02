@@ -7,8 +7,9 @@ const Feedback = ({ data }) => {
 
   const onLoad = ({ id }) => {
     fetch(`/api/feedback/${id}`)
-      .then((res) => res.json())
-      .then(({ file }) => setState(file));
+      .then(res => res.json())
+      .then(({file}) => setState(file))
+      .catch(e => console.log(e));
   };
 
   return (
@@ -17,7 +18,7 @@ const Feedback = ({ data }) => {
       <ul>
         {data.map(({ id, text }) => (
           <li key={id}> {text}{' '}
-            <button onClick={() => onLoad(id)}>
+            <button onClick={() => onLoad({ id })}>
               Show Details
             </button>
           </li>

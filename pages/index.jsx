@@ -5,10 +5,12 @@ const Home = () => {
   const isEmail = useRef();
   const isText = useRef();
 
-  const onSubmit = () => {
+  const onSubmit = e => {
     e.preventDefault();
+
     const email = isEmail.current.value;
     const text = isText.current.value;
+
     fetch('/api/feedback', {
       method: 'POST',
       body: JSON.stringify({ email, text }),
@@ -25,10 +27,11 @@ const Home = () => {
       .then(({ data }) => setState(data));
   }
 
+  console.log(state);
   return (
     <>
       <h1>Home</h1>
-      <form noValidat onSubmit={onSubmit}>
+      <form noValidate onSubmit={onSubmit}>
         <div>
           <label htmlFor="email">Email</label>
           <input type="email" id='email' ref={isEmail} />
@@ -37,7 +40,7 @@ const Home = () => {
           <label htmlFor="feedback">Feedback</label>
           <textarea rows={5} id='feedback' ref={isText} />
         </div>
-        <button type="submit">submit</button>
+        <button>submit</button>
       </form>
       <hr />
       <button onClick={onLoad}>Load Feedback</button>

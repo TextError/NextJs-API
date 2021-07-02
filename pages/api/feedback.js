@@ -4,7 +4,7 @@ import path from 'path';
 const feedback = (req, res) => {
   if(req.method === 'POST') {
     const { email, text } = req.body;
-    const file = { id: new Date().toISOString, email, text }
+    const file = { id: new Date().toISOString(), email, text };
 
     const filePath = path.join(process.cwd(), 'data', 'feedback.json');
     const fileData = fs.readFileSync(filePath);

@@ -14,7 +14,10 @@ const feedback = (req, res) => {
 
     res.status(201).json({ message: 'Success!', file });
   } else {
-    res.status(200).json({ message: 'Hello from backend!' });
+    const filePath = path.join(process.cwd(), 'data', 'feedback.json');
+    const fileData = fs.readFileSync(filePath);
+    const data = JSON.parse(fileData);
+    res.status(200).json({ data });
   }
 };
 

@@ -1,6 +1,7 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const Home = () => {
+  const [state, setState] = useState([]);
   const isEmail = useRef();
   const isText = useRef();
 
@@ -18,20 +19,31 @@ const Home = () => {
       .catch(e => console.log(e))
   };
 
+  const onLoad = () => {
+    fetch('/api/feedback')
+      .then((res) => res.json())
+      .then(({ data }) => setState(data));
+  }
+
   return (
     <>
       <h1>Home</h1>
-        <form noValidat onSubmit={onSubmit}>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input type="email" id='email' ref={isEmail} />
-          </div>
-          <div>
-            <label htmlFor="feedback">Feedback</label>
-            <textarea rows={5} id='feedback' ref={isText} />
-          </div>
-          <button type="submit">submit</button>
-        </form>
+      <form noValidat onSubmit={onSubmit}>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input type="email" id='email' ref={isEmail} />
+        </div>
+        <div>
+          <label htmlFor="feedback">Feedback</label>
+          <textarea rows={5} id='feedback' ref={isText} />
+        </div>
+        <button type="submit">submit</button>
+      </form>
+      <hr />
+      <button onClick={onLoad}>Load Feedback</button>
+      <ul>
+        { state.map(({ id, text }) => <li key={id}>{text}</li>) }
+      </ul>
     </>
   );
 }
